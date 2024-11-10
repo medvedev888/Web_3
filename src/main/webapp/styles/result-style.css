@@ -1,0 +1,99 @@
+/* import Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0px;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../sources/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #002636;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: normal;
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+    overflow: auto;
+}
+
+button {
+    padding: 5px;
+    font-weight: 300;
+    font-style: normal;
+    font-family: "Roboto", sans-serif;
+}
+
+.container {
+    position: relative;
+    border-radius: 30px;
+    box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.25);
+}
+
+th, td {
+    padding: 8px;
+}
+
+#table {
+    width: 350px;
+    font-size: 20px;
+}
+
+#containerTable {
+    width: 900px;
+    text-align: center;
+    margin-left: 15%;
+    margin-top: 5%;
+    font-size: 24px;
+    padding: 15px;
+    display: flex;
+    background: rgba(255, 255, 255, 0.45);
+}
+
+#containerTable td {
+    padding-right: 40px;
+}
+
+#mainStringInTable {
+    position: relative;
+    display: block;
+    top: 10%;
+    padding-right: 45px;
+    margin-left: 30px;
+}
+
+#mainStringInTable td {
+    padding-right: 45px;
+    margin-left: 30px;
+}
+
+
+
+#goToMainPage {
+    position: relative;
+    display: block;
+    margin-top: 50px;
+    margin-right: 30px;
+    margin-left: 80px;
+    float: right;
+    transform: translate(-50%, -50%);
+    color: #002636;
+    font-size: 18px;
+    border-radius: 30px;
+    background: rgba(0, 38, 54, 0.1);
+    border: 1px solid #002636;
+    width: 200px;
+    height: auto;
+}
+
+#stringOfData {
+    position: relative;
+    display: block;
+    margin-left: 30px;
+}
