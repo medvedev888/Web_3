@@ -36,3 +36,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/wildfly-21.0.0.Final/

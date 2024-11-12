@@ -1,48 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<!--   <h:outputStylesheet name="base.css" library="css" />-->
-<!--   <h:outputStylesheet name="style.css" library="css" />-->
-   <link rel="shortcut icon" type="image/x-icon" href="#{resource['img/three.png']}"/>
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="#{request.contextPath}/resources/css/start-style.css" rel="stylesheet"/>
+    </h:head>
 
-   <ui:insert name="head">
-      <title>Lab3 #20001</title>
-   </ui:insert>
-</h:head>
+    <h:body>
+        <!-- Header section -->
+        <ui:insert name="header">
+            <title>Lab 3 - Start page</title>
+            <ui:include src="headerTemplate.xhtml"/>
+        </ui:insert>
 
-<h:body>
-   <div class="wrapper">
-      <div class="header">
-         <div class="container">
-            <ui:insert name="header">
-               <ui:include src="templHeader.xhtml"/>
-            </ui:insert>
-         </div>
-      </div>
+        <!-- Main content section -->
+        <ui:insert name="main">
+        </ui:insert>
 
-      <div class="main">
-         <div class="container">
-            <ui:insert name="main">
-            </ui:insert>
-         </div>
-      </div>
+        <!-- Optional JavaScript or other footer content -->
+<!--        <ui:insert name="js"/>-->
+    </h:body>
 
-      <div class="footer">
-         <div class="container">
-            <ui:insert name="footer">
-               <ui:include src="templFooter.xhtml"/>
-            </ui:insert>
-         </div>
-      </div>
-   </div>
-
-<!--   <h:outputScript name="js/global.js"/>-->
-<!--   <ui:insert name="js"/>-->
-</h:body>
 </html>

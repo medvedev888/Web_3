@@ -6,20 +6,16 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/templates/templLayout.xhtml">
-    <ui:define name="head">
-        <title>Lab3 - Start page</title>
-    </ui:define>
+<ui:include src="/templates/layoutTemplate.xhtml"/>
 
-    <ui:define name="main">
-        <h1 class="main__title">Web-programming, Lab #3</h1>
+<div class="container" id="main-container">
+    <p id="main-container-header">Time:</p>
 
-        <h:form styleClass="main__datetime">
-            <h:outputText id="my-clock" value="#{timeKeeper.time}"/>
-            <p:poll interval="11" update="my-clock" listener="#{timeKeeper.updateTime}"/>
-        </h:form>
+    <p id="clock"/>
 
-        <h:button outcome="main" style="width: 150px" styleClass="big-btn" value="Verify!"/>
-    </ui:define>
-</ui:composition>
+    <h:button outcome="main" class="button" id="submit_button" value="Main page"/>
+</div>
+
+<h:outputScript name="js/clock.js"/>
+
 </html>
