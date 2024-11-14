@@ -15,8 +15,8 @@ const xAxis = canvasGraphGridWidth / 2;
 const yAxis = canvasGraphGridHeight / 2;
 
 // size of grid
-const scaleX = 50;
-const scaleY = 50;
+const scaleX = 45;
+const scaleY = 45;
 
 // coordinate for sending, when click on graph
 let xCoordinate;
@@ -69,14 +69,14 @@ function drawingMainAxes() {
     gridCtx.stroke();
     gridCtx.closePath();
 
-    let m = -4;
+    let m = -5;
 
     gridCtx.beginPath();
 
     gridCtx.font = "16px Arial";
     gridCtx.globalAlpha = 0.4;
 
-    for (let i = 25; i < canvasGraphGridWidth; i += scaleX) {
+    for (let i = 20; i <= canvasGraphGridWidth; i += scaleX) {
         gridCtx.fillText(m, i, yAxis);
         gridCtx.fillText(-1 * m, xAxis, i);
         m++;
@@ -137,7 +137,7 @@ function drawingFigure(r_value) {
 //deleting figures
 function deleteFigures() {
     figuresCtx.beginPath();
-    figuresCtx.clearRect(0, 0, 450, 450);
+    figuresCtx.clearRect(0, 0, canvasGraphGridWidth, canvasGraphGridHeight);
     figuresCtx.closePath();
 }
 
