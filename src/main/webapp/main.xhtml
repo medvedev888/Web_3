@@ -32,24 +32,26 @@
 
         <div>
             <h:form id="pointForm">
+                <!--  TODO: need to add validation of fields -->
 
                 <!-- Слайдер для X -->
-                <h:outputLabel value="Select X:" for="xSlider"/>
-                <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1"/>
-                <h:inputText styleClass="input" id="xValue" value="#{pointBean.x}" readonly="true"/>
+                <p:inputText styleClass="input" id="xValue" name="x" value="#{pointBean.currentPoint.x}" readonly="true" disabled="true"/>
+                <p:slider for="xValue" display="xValue" range="false" minValue="-4" maxValue="4" step="0.1" />
+                <h:inputHidden id="x" name="x" value="#{pointBean.currentPoint.x}">
+<!--                    <f:validator validatorId="validatorX"/>-->
+                </h:inputHidden>
 
                 <!-- Текстовое поле для Y -->
                 <h:outputLabel value="Enter Y:" for="yInput"/>
-                <h:inputText styleClass="input" id="yInput" value="#{pointBean.y}" placeholder="Диапазон [-5, 5]"/>
+                <h:inputText styleClass="input" name="y" id="yInput" value="#{pointBean.currentPoint.y}" placeholder="Диапазон [-5, 5]"/>
 
                 <!-- Слайдер для R -->
                 <h:outputLabel value="Select R:" for="rSlider"/>
-                <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1"/>
-                <h:inputText styleClass="input" id="rValue" value="#{pointBean.r}" readonly="true"/>
+                <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1" value="#{pointBean.currentPoint.r}" onSlideEnd="handleSliderChange()"/>
+                <h:inputText styleClass="input" id="rValue" name="r" value="#{pointBean.currentPoint.r}" readonly="true"/>
 
                 <!-- Кнопка Отправки -->
-                <!--update="pointTable"-->
-                <p:commandButton styleClass="button submit_button" value="Отправить" action="#{pointBean.submitPoint}" update=""/>
+                <p:commandButton styleClass="button submit_button" value="Отправить" action="#{pointBean.addPoint()}" update="pointTable"/>
             </h:form>
         </div>
 
@@ -57,34 +59,28 @@
 
     <!-- Result Table Container -->
     <div class="container" id="table">
-        <table>
-            <thead>
-            <tr>
-                <td>X</td>
-                <td>Y</td>
-                <td>R</td>
-                <td>Result</td>
-                <td>Executed at</td>
-                <td>Execution time</td>
-            </tr>
-            </thead>
-            <tbody id="result_table">
-            <!--            TODO: change this block -->
-            <ui:repeat value="#{bean.resultList}" var="point">
-                <tr>
-                    <td>#{point.x}</td>
-                    <td>#{point.y}</td>
-                    <td>#{point.r}</td>
-                    <td>#{point.result}</td>
-                </tr>
-            </ui:repeat>
-            </tbody>
-        </table>
+        <p:dataTable id="pointTable" tableStyleClass="main__table" var="point" value="#{pointBean.resultListOfPoints}"
+                     emptyMessage="">
+            <p:column headerText="X">
+                <h:outputText value="#{point.x}" />
+            </p:column>
+
+            <p:column headerText="Y">
+                <h:outputText value="#{point.y}" />
+            </p:column>
+
+            <p:column headerText="R">
+                <h:outputText value="#{point.r}" />
+            </p:column>
+
+            <p:column headerText="Result">
+                <h:outputText value="#{point.result}" />
+            </p:column>
+        </p:dataTable>
     </div>
 
     <h:outputScript name="js/graph.js"/>
     <h:outputScript name="js/validation.js"/>
-    <h:outputScript>const ctx = "#{facesContext.externalContext.requestContextPath}"</h:outputScript>
 </h:body>
 
 </html>

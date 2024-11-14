@@ -5,17 +5,15 @@
               version="2.3">
 
     <!-- Определение Application-Scoped бина -->
-<!--    <managed-bean>-->
-<!--        <managed-bean-name></managed-bean-name>-->
-<!--        <managed-bean-class></managed-bean-class>-->
-<!--        <managed-bean-scope>application</managed-bean-scope>-->
-<!--    </managed-bean>-->
+    <managed-bean>
+        <managed-bean-name>pointBean</managed-bean-name>
+        <managed-bean-class>me.vladislav.web_3.beans.PointBean</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
 
     <!-- Настройка навигации -->
     <navigation-rule>
-        <!-- Страница, с которой начинается навигация -->
         <from-view-id>/start.xhtml</from-view-id>
-        <!-- Определение перехода на main.xhtml -->
         <navigation-case>
             <from-outcome>main</from-outcome>
             <to-view-id>/main.xhtml</to-view-id>
