@@ -1,19 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
 
 <h:head>
     <title>Main page</title>
+    <link href="#{request.contextPath}/resources/css/styles.css" rel="stylesheet"/>
+    <h:outputStylesheet name="css/styles.css" />
+
 </h:head>
 
+<ui:include src="/templates/layoutTemplate.xhtml"/>
 
 <h:body>
+    <!-- Graph container -->
+    <div class="container" id="graph">
+        <p>Graph</p>
+        <canvas id="canvas_graph_grid" width="450" height="450"></canvas>
+        <canvas id="canvas_graph_figures" width="450" height="450"></canvas>
+        <canvas id="canvas_graph_points" width="450" height="450"></canvas>
+    </div>
 
+    <!-- Choose parameters container -->
+    <div class="container" id="parameters">
+        <p>Enter parameters</p>
+        <p style="margin-bottom: 10px">(Every parameter should be filled!):</p>
+
+        <div>
+            <h:form id="pointForm">
+
+                <!-- Слайдер для X -->
+                <h:outputLabel value="Select X:" for="xSlider"/>
+                <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1"/>
+                <h:inputText styleClass="input" id="xValue" value="#{pointBean.x}" readonly="true"/>
+
+                <!-- Текстовое поле для Y -->
+                <h:outputLabel value="Enter Y:" for="yInput"/>
+                <h:inputText styleClass="input" id="yInput" value="#{pointBean.y}" placeholder="Диапазон [-5, 5]"/>
+
+                <!-- Слайдер для R -->
+                <h:outputLabel value="Select R:" for="rSlider"/>
+                <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1"/>
+                <h:inputText styleClass="input" id="rValue" value="#{pointBean.r}" readonly="true"/>
+
+                <!-- Кнопка Отправки -->
+                <!--update="pointTable"-->
+                <p:commandButton styleClass="button submit_button" value="Отправить" action="#{pointBean.submitPoint}" update=""/>
+            </h:form>
+        </div>
+
+    </div>
+
+    <!-- Result Table Container -->
+    <div class="container" id="table">
+        <table>
+            <thead>
+            <tr>
+                <td>X</td>
+                <td>Y</td>
+                <td>R</td>
+                <td>Result</td>
+                <td>Executed at</td>
+                <td>Execution time</td>
+            </tr>
+            </thead>
+            <tbody id="result_table">
+            <!--            TODO: change this block -->
+            <ui:repeat value="#{bean.resultList}" var="point">
+                <tr>
+                    <td>#{point.x}</td>
+                    <td>#{point.y}</td>
+                    <td>#{point.r}</td>
+                    <td>#{point.result}</td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+        </table>
+    </div>
+
+    <h:outputScript name="js/graph.js"/>
+    <h:outputScript name="js/validation.js"/>
+    <h:outputScript>const ctx = "#{facesContext.externalContext.requestContextPath}"</h:outputScript>
 </h:body>
 
 </html>
