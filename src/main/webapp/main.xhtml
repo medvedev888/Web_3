@@ -35,11 +35,9 @@
                 <!--  TODO: need to add validation of fields -->
 
                 <!-- Слайдер для X -->
-                <p:inputText styleClass="input" id="xValue" name="x" value="#{pointBean.currentPoint.x}" readonly="true" disabled="true"/>
-                <p:slider for="xValue" display="xValue" range="false" minValue="-4" maxValue="4" step="0.1" />
-                <h:inputHidden id="x" name="x" value="#{pointBean.currentPoint.x}">
-<!--                    <f:validator validatorId="validatorX"/>-->
-                </h:inputHidden>
+                <h:outputLabel value="Select X:" for="xSlider"/>
+                <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1" value="#{pointBean.currentPoint.x}"/>
+                <h:inputText styleClass="input" id="xValue" name="x" value="#{pointBean.currentPoint.x}"/>
 
                 <!-- Текстовое поле для Y -->
                 <h:outputLabel value="Enter Y:" for="yInput"/>
@@ -48,10 +46,14 @@
                 <!-- Слайдер для R -->
                 <h:outputLabel value="Select R:" for="rSlider"/>
                 <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1" value="#{pointBean.currentPoint.r}" onSlideEnd="handleSliderChange()"/>
-                <h:inputText styleClass="input" id="rValue" name="r" value="#{pointBean.currentPoint.r}" readonly="true"/>
+                <h:inputText styleClass="input" id="rValue" name="r" value="#{pointBean.currentPoint.r}"/>
 
                 <!-- Кнопка Отправки -->
-                <p:commandButton styleClass="button submit_button" value="Отправить" action="#{pointBean.addPoint()}" update="pointTable"/>
+<!--                TODO: need to repair this block -->
+                <p:commandButton styleClass="button submit_button" value="Submit" type="submit" action="#{pointBean.addPoint()}"
+                                 update="pointsTable"
+                                 oncomplete="redrawingPoints();" />
+
             </h:form>
         </div>
 
@@ -59,7 +61,7 @@
 
     <!-- Result Table Container -->
     <div class="container" id="table">
-        <p:dataTable id="pointTable" tableStyleClass="main__table" var="point" value="#{pointBean.resultListOfPoints}"
+        <p:dataTable id="pointsTable" tableStyleClass="table" var="point" value="#{pointBean.resultListOfPoints}"
                      emptyMessage="">
             <p:column headerText="X">
                 <h:outputText value="#{point.x}" />

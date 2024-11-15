@@ -87,7 +87,7 @@ function drawingMainAxes() {
 
 //drawing point
 function drawPoint(xCoord, yCoord, result) {
-    if(result) {
+    if(result === "true") {
         pointsCtx.fillStyle = "#01ff7f";
     }
     else {
@@ -141,12 +141,17 @@ function deleteFigures() {
     figuresCtx.closePath();
 }
 
-function redrawingPoints(arrayPoints){
-    if(arrayPoints !== null) {
-        for(let i = 0; i < arrayPoints.length; i++){
-            drawPoint(arrayPoints[i].x, arrayPoints[i].y, arrayPoints[i].result);
+function redrawingPoints() {
+    const tableRows = document.querySelectorAll('.table tbody tr');
+    tableRows.forEach(x => {
+        if (x.childNodes.length > 1) {
+            const children = x.children;
+            console.log(children[0].innerHTML)
+            console.log(children[1].innerHTML)
+            console.log(children[3].innerHTML)
+            drawPoint(children[0].innerHTML, children[1].innerHTML, children[3].innerHTML);
         }
-    }
+    });
 }
 
 window.addEventListener("load", () => {

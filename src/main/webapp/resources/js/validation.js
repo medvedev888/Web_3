@@ -6,6 +6,6 @@ function handleSliderChange() {
     deleteFigures();
     drawingFigure(r);
     // TODO: need to change this block
-    // redrawingPoints(arrayPoints);
+    redrawingPoints();
 
 }
