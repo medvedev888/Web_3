@@ -3,10 +3,12 @@ package me.vladislav.web_3.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.inject.Named;
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@Named("point")
 public class Point implements Serializable {
     private double x;
     private double y;

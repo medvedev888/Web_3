@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      >
+>
 
 <h:head>
     <title>Main page</title>
@@ -45,7 +45,9 @@
 
                 <!-- Слайдер для R -->
                 <h:outputLabel value="Select R:" for="rSlider"/>
-                <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1" value="#{pointBean.currentPoint.r}" onSlideEnd="handleSliderChange()"/>
+                <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1"
+                          value="#{pointBean.currentPoint.r}"
+                          onSlideEnd="updatePointsFromSliderCommand; updatePointsFromSlider(); handleSliderChange();"/>
                 <h:inputText styleClass="input" id="rValue" name="r" value="#{pointBean.currentPoint.r}"/>
 
                 <!-- Кнопка Отправки -->
@@ -81,8 +83,15 @@
         </p:dataTable>
     </div>
 
+<!--    TODO: need repair this command -->
+<!--    <p:remoteCommand name="updatePointsFromSliderCommand" actionListener="#{pointBean.updatePoints()}"-->
+<!--                     process="@this myValueHidden" update="pointsTable"/>-->
+<!--    <h:inputHidden id="myValueHidden" value="#{pointBean.currentPoint.r}" />-->
+    <p:remoteCommand name="updatePointsFromSliderCommand" actionListener="#{pointBean.updatePoints()}"
+                     process="@this" update="pointsTable"/>
+
     <h:outputScript name="js/graph.js"/>
-    <h:outputScript name="js/validation.js"/>
+    <h:outputScript name="js/main.js"/>
 </h:body>
 
 </html>
