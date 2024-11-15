@@ -46,6 +46,8 @@ public class PointBean implements Serializable {
                 point.setResult(point.checkArea(point.getX(), point.getY(), point.getR()));
             }
         }
+
     }
+
 
 }

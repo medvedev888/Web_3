@@ -54,7 +54,6 @@ function gridRendering() {
 
 
 //drawing main axes
-
 function drawingMainAxes() {
     gridCtx.beginPath();
     gridCtx.strokeStyle = "#000000";
@@ -87,10 +86,9 @@ function drawingMainAxes() {
 
 //drawing point
 function drawPoint(xCoord, yCoord, result) {
-    if(result === "true") {
+    if (result === "true") {
         pointsCtx.fillStyle = "#01ff7f";
-    }
-    else {
+    } else {
         pointsCtx.fillStyle = "#ee294b";
     }
     xCoord = xCoord * scaleX + xAxis;
@@ -105,6 +103,7 @@ function drawPoint(xCoord, yCoord, result) {
 }
 
 function drawingFigure(r_value) {
+
     //drawing square
     figuresCtx.beginPath();
     figuresCtx.strokeStyle = "#000000";
@@ -113,7 +112,6 @@ function drawingFigure(r_value) {
     figuresCtx.closePath();
 
     //drawing triangle
-
     figuresCtx.beginPath();
     figuresCtx.moveTo(xAxis, yAxis);
     figuresCtx.lineTo(xAxis, yAxis + r_value * scaleY);
@@ -124,7 +122,6 @@ function drawingFigure(r_value) {
     figuresCtx.closePath();
 
     //drawing quadrant of a circle
-
     figuresCtx.beginPath();
     figuresCtx.strokeStyle = "#002636";
     figuresCtx.globalAlpha = 0.5;
@@ -134,14 +131,15 @@ function drawingFigure(r_value) {
     figuresCtx.closePath();
 }
 
-//deleting figures
+// to delete figures
 function deleteFigures() {
     figuresCtx.beginPath();
     figuresCtx.clearRect(0, 0, canvasGraphGridWidth, canvasGraphGridHeight);
     figuresCtx.closePath();
 }
 
-function redrawingPoints() {
+// to redraw points
+function redrawPoints() {
     console.log("redrawing points method is working: ")
     const tableRows = document.querySelectorAll('.table tbody tr');
     tableRows.forEach(x => {
@@ -159,7 +157,7 @@ window.addEventListener("load", () => {
     gridRendering();
     drawingMainAxes();
     drawingFigure(JSON.parse(decodeURIComponent(urlParams.get('r'))));
-    redrawingPoints(arrayPoints);
+    redrawPoints(arrayPoints);
 })
 
 document.querySelector('#canvas_graph_points').onmousemove = function (event) {

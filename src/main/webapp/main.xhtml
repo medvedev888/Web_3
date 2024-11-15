@@ -51,10 +51,9 @@
                 <h:inputText styleClass="input" id="rValue" name="r" value="#{pointBean.currentPoint.r}"/>
 
                 <!-- Кнопка Отправки -->
-<!--                TODO: need to repair this block -->
                 <p:commandButton styleClass="button submit_button" value="Submit" type="submit" action="#{pointBean.addPoint()}"
                                  update="pointsTable"
-                                 oncomplete="redrawingPoints();" />
+                                 oncomplete="redrawPoints();" />
 
             </h:form>
         </div>
@@ -83,8 +82,9 @@
         </p:dataTable>
     </div>
 
+    <!-- Для обновления массива точек при смене параметра r -->
     <p:remoteCommand name="updatePointsFromSliderCommand" actionListener="#{pointBean.updatePoints()}"
-                     process="@this" update="pointsTable" oncomplete="redrawingPoints();"/>
+                     process="@this" update="pointsTable" oncomplete="redrawPoints();"/>
 
     <h:outputScript name="js/graph.js"/>
     <h:outputScript name="js/main.js"/>

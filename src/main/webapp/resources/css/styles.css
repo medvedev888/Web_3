@@ -201,8 +201,6 @@ span.ui-slider-handle.ui-corner-all.ui-state-default {
 .ui-slider .ui-slider-range {
     border-radius: 30px;
     background: rgba(0, 38, 54, 0.1);
-    border: 1px solid #002636;
-    height:12px;
 }
 
 .ui-widget-content {
