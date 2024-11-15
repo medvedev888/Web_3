@@ -142,13 +142,14 @@ function deleteFigures() {
 }
 
 function redrawingPoints() {
+    console.log("redrawing points method is working: ")
     const tableRows = document.querySelectorAll('.table tbody tr');
     tableRows.forEach(x => {
         if (x.childNodes.length > 1) {
             const children = x.children;
-            // console.log(children[0].innerHTML)
-            // console.log(children[1].innerHTML)
-            // console.log(children[3].innerHTML)
+            console.log(children[0].innerHTML)
+            console.log(children[1].innerHTML)
+            console.log(children[3].innerHTML)
             drawPoint(children[0].innerHTML, children[1].innerHTML, children[3].innerHTML);
         }
     });
