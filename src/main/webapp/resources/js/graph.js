@@ -160,9 +160,16 @@ document.querySelector('#canvas_graph_points').onmousemove = function (event) {
     event = event || window.event
     xCoordinate = ((event.offsetX - xAxis) / scaleX).toFixed(2);
     yCoordinate = ((-1) * ((event.offsetY - yAxis) / scaleY)).toFixed(2);
-
 }
+
 document.querySelector('#canvas_graph_points').onclick = function () {
     // TODO: change this block
-    sendRequest(xCoordinate, yCoordinate, r, false);
+    const xInput = document.querySelector('.x-value');
+    const yInput = document.querySelector('.y-input');
+    const submitButton = document.querySelector('.submit_button');
+
+    xInput.value = xCoordinate;
+    yInput.value = yCoordinate;
+
+    submitButton.click();
 }
