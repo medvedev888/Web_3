@@ -31,16 +31,16 @@
         <p style="margin-bottom: 10px">(Every parameter should be filled!):</p>
 
         <div>
-            <h:form id="pointForm">
+            <h:form id="pointForm" styleClass="point-form">
                 <!--  TODO: need to add validation of fields -->
                 <!-- Слайдер для X -->
                 <h:outputLabel value="Select X:" for="xSlider"/>
                 <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1" value="#{pointBean.currentPoint.x}"/>
-                <h:inputText styleClass="input" id="xValue" name="x" value="#{pointBean.currentPoint.x}"/>
+                <h:inputText styleClass="input x-value" id="xValue" name="x" value="#{pointBean.currentPoint.x}"/>
 
                 <!-- Текстовое поле для Y -->
                 <h:outputLabel value="Enter Y:" for="yInput"/>
-                <h:inputText styleClass="input" name="y" id="yInput" value="#{pointBean.currentPoint.y}" placeholder="Диапазон [-5, 5]"/>
+                <h:inputText styleClass="input y-input" name="y" id="yInput" value="#{pointBean.currentPoint.y}" placeholder="Диапазон [-5, 5]"/>
 
                 <!-- Слайдер для R -->
                 <h:outputLabel value="Select R:" for="rSlider"/>
@@ -48,12 +48,17 @@
                           value="#{pointBean.currentPoint.r}"
                           onSlideEnd="updatePointsFromSlider(); handleSliderChange();"/>
 
-                <h:inputText styleClass="input" id="rValue" name="r" value="#{pointBean.currentPoint.r}"/>
+                <h:inputText styleClass="input r-value" id="rValue" name="r" value="#{pointBean.currentPoint.r}"/>
 
                 <!-- Кнопка Отправки -->
-                <p:commandButton styleClass="button submit_button" value="Submit" type="submit" action="#{pointBean.addPoint()}"
-                                 update="pointsTable"
-                                 oncomplete="redrawPoints();" />
+                <p:commandButton
+                        styleClass="button submit_button"
+                        value="Submit"
+                        action="#{pointBean.addPoint()}"
+                        process="@form"
+                        update="pointsTable"
+                        onstart="return validateParameters();"
+                        oncomplete="if (!args.validationFailed) { redrawPoints(); }" />
 
             </h:form>
         </div>
@@ -86,6 +91,7 @@
     <p:remoteCommand name="updatePointsFromSliderCommand" actionListener="#{pointBean.updatePoints()}"
                      process="@this" update="pointsTable" oncomplete="redrawPoints();"/>
 
+    <h:outputScript name="js/validation.js" />
     <h:outputScript name="js/graph.js"/>
     <h:outputScript name="js/main.js"/>
 </h:body>
