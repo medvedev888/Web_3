@@ -31,24 +31,24 @@
         <p style="margin-bottom: 10px">(Every parameter should be filled!):</p>
 
         <div>
-            <h:form id="pointForm" styleClass="point-form">
+            <h:form id="pointForm" styleClass="pointDTO-form">
                 <!--  TODO: need to add validation of fields -->
                 <!-- Слайдер для X -->
                 <h:outputLabel value="Select X:" for="xSlider"/>
-                <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1" value="#{pointBean.currentPoint.x}"/>
-                <h:inputText styleClass="input x-value" id="xValue" name="x" value="#{pointBean.currentPoint.x}"/>
+                <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1" value="#{pointBean.currentPointDTO.x}"/>
+                <h:inputText styleClass="input x-value" id="xValue" name="x" value="#{pointBean.currentPointDTO.x}"/>
 
                 <!-- Текстовое поле для Y -->
                 <h:outputLabel value="Enter Y:" for="yInput"/>
-                <h:inputText styleClass="input y-input" name="y" id="yInput" value="#{pointBean.currentPoint.y}" placeholder="Диапазон [-5, 5]"/>
+                <h:inputText styleClass="input y-input" name="y" id="yInput" value="#{pointBean.currentPointDTO.y}" placeholder="Диапазон [-5, 5]"/>
 
                 <!-- Слайдер для R -->
                 <h:outputLabel value="Select R:" for="rSlider"/>
                 <p:slider id="rSlider" for="rValue" minValue="2" maxValue="5" step="0.1"
-                          value="#{pointBean.currentPoint.r}"
+                          value="#{pointBean.currentPointDTO.r}"
                           onSlideEnd="updatePointsFromSlider(); handleSliderChange();"/>
 
-                <h:inputText styleClass="input r-value" id="rValue" name="r" value="#{pointBean.currentPoint.r}"/>
+                <h:inputText styleClass="input r-value" id="rValue" name="r" value="#{pointBean.currentPointDTO.r}"/>
 
                 <!-- Кнопка Отправки -->
                 <p:commandButton
@@ -67,22 +67,22 @@
 
     <!-- Result Table Container -->
     <div class="container" id="table">
-        <p:dataTable id="pointsTable" tableStyleClass="table" var="point" value="#{pointBean.resultListOfPoints}"
+        <p:dataTable id="pointsTable" tableStyleClass="table" var="pointDTO" value="#{pointBean.resultListOfPoints}"
                      emptyMessage="">
             <p:column headerText="X">
-                <h:outputText value="#{point.x}" />
+                <h:outputText value="#{pointDTO.x}" />
             </p:column>
 
             <p:column headerText="Y">
-                <h:outputText value="#{point.y}" />
+                <h:outputText value="#{pointDTO.y}" />
             </p:column>
 
             <p:column headerText="R">
-                <h:outputText value="#{point.r}" />
+                <h:outputText value="#{pointDTO.r}" />
             </p:column>
 
             <p:column headerText="Result">
-                <h:outputText value="#{point.result}" />
+                <h:outputText value="#{pointDTO.result}" />
             </p:column>
         </p:dataTable>
     </div>

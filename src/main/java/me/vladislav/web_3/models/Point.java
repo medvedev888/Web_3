@@ -1,39 +1,41 @@
 package me.vladislav.web_3.models;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.io.Serializable;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-public class Point implements Serializable {
-    private double x;
-    private double y;
-    private double r;
-    private boolean result;
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 
-    public Point(double x, double y, double r) {
+@Entity
+@Table(name = "points")
+public class Point {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    private Integer id;
+
+    @Column(name = "x", nullable = false)
+    private Double x;
+
+    @Column(name = "y", nullable = false)
+    private Double y;
+
+    @Column(name = "r", nullable = false)
+    private Double r;
+
+    @Column(name = "result", nullable = false)
+    private Boolean result;
+
+    public Point(Double x, Double y, Double r, Boolean result) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.result = checkArea(x, y, r);
-    }
-
-    // function for getting result
-    public boolean checkArea(double x, double y, double r) {
-        boolean result = false;
-
-        //    TODO: need to change this block
-        if (x >= 0 && y >= 0 && ((x * x + y * y) <= (r * r))) {
-            result = true;
-        } else if (x >= 0 && y <= 0 && x <= r && y >= (-1) * (r / 2)) {
-            result = true;
-        } else if (x <= 0 && x >= -1 * r && y <= 0 && y >= -1 * r && y >= (-1 * x) - r) {
-            result = true;
-        }
-
-        return result;
+        this.result = result;
     }
 
 }
