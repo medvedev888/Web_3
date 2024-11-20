@@ -1,3 +1,4 @@
+
 function validateParameters() {
     const xInput = document.querySelector('.x-value');
     const yInput = document.querySelector('.y-input');
@@ -17,28 +18,13 @@ function validateParameters() {
     if (isNaN(x) || x < -4 || x > 4) {
         alert("X must be between -4 and 4.");
         isValid = false;
-    }
-
-    if (isNaN(y) || y < -5 || y > 5) {
+    } else if (isNaN(y) || y < -5 || y > 5) {
         alert("Y must be between -5 and 5.");
         isValid = false;
-    }
-
-    if (isNaN(r) || r < 2 || r > 5) {
+    } else if (isNaN(r) || r < 2 || r > 5) {
         alert("R must be between 2 and 5.");
         isValid = false;
     }
 
     return isValid;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const validateButton = document.querySelector('.submit_button');
-    if (validateButton) {
-        validateButton.addEventListener('click', (event) => {
-            if (!validateParameters()) {
-                event.preventDefault();
-            }
-        });
-    }
-});
