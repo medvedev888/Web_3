@@ -12,6 +12,8 @@ function handleSliderChange() {
 // подготовка параметра r к отправке на бэкэнд
 function updatePointsFromSlider() {
     var r = parseFloat(document.getElementById("pointForm:rValue").value);
-    updatePointsFromSliderCommand({r:r});
-    redrawPoints();
+    if(validateParameters()){
+        updatePointsFromSliderCommand({r:r});
+        redrawPoints();
+    }
 }
