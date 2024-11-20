@@ -36,11 +36,11 @@
                 <!-- Слайдер для X -->
                 <h:outputLabel value="Select X:" for="xSlider"/>
                 <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1" value="#{pointBean.currentPointDTO.x}"/>
-                <h:inputText styleClass="input x-value" id="xValue" name="x" value="#{pointBean.currentPointDTO.x}"/>
+                <h:inputText styleClass="input x-value" id="xValue" name="x" value="#{pointBean.currentPointDTO.x}" maxlength="7" />
 
                 <!-- Текстовое поле для Y -->
                 <h:outputLabel value="Enter Y:" for="yInput"/>
-                <h:inputText styleClass="input y-input" name="y" id="yInput" value="#{pointBean.currentPointDTO.y}" placeholder="Диапазон [-5, 5]"/>
+                <h:inputText styleClass="input y-input" name="y" id="yInput" value="#{pointBean.currentPointDTO.y}" placeholder="Диапазон [-5, 5]" maxlength="7" />
 
                 <!-- Слайдер для R -->
                 <h:outputLabel value="Select R:" for="rSlider"/>
@@ -48,7 +48,7 @@
                           value="#{pointBean.currentPointDTO.r}"
                           onSlideEnd="updatePointsFromSlider(); handleSliderChange();"/>
 
-                <h:inputText styleClass="input r-value" id="rValue" name="r" value="#{pointBean.currentPointDTO.r}"/>
+                <h:inputText styleClass="input r-value" id="rValue" name="r" value="#{pointBean.currentPointDTO.r}" onchange="updatePointsFromSlider(); handleSliderChange();" maxlength="7" />
 
                 <!-- Кнопка Отправки -->
                 <p:commandButton
