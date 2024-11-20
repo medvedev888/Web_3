@@ -10,15 +10,22 @@ import java.util.Optional;
 public class PointDataAccessObject implements DataAccessObject<Point> {
 
     @Override
-    public void updateList() {
-        //TODO: need to do this block
+    public void updatePoint(Point point) {
+        try (Session session = HibernateUtils.getSession()) {
+            session.beginTransaction();
+            session.merge(point);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public Optional<List<Point>> getList() {
         try (Session session = HibernateUtils.getSession()) {
             session.beginTransaction();
-            List<Point> listOfPoints = session.createQuery("FROM Point", Point.class).getResultList();
+            List<Point> listOfPoints = session.createQuery("FROM Point p ORDER BY p.id DESC", Point.class).getResultList();
             session.getTransaction().commit();
             return Optional.ofNullable(listOfPoints);
         } catch (Exception e) {

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface DataAccessObject<T> {
 
-    void updateList();
+    void updatePoint(T t);
 
     Optional<List<T>> getList();
 

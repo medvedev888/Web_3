@@ -4,30 +4,44 @@ import lombok.Data;
 import me.vladislav.web_3.dao.PointDataAccessObject;
 import me.vladislav.web_3.dto.PointDTO;
 import me.vladislav.web_3.models.Point;
+import me.vladislav.web_3.utils.HibernateUtils;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @Data
 public class PointBean implements Serializable {
     private PointDataAccessObject pointDataAccessObject;
     private PointDTO currentPointDTO;
-    private List<PointDTO> listOfPointDTOS;
 
     @PostConstruct
     private void initialize() {
         pointDataAccessObject = new PointDataAccessObject();
-        listOfPointDTOS = new ArrayList<>();
         currentPointDTO = new PointDTO();
     }
 
+    @PreDestroy
+    private void preDestroy() {
+        HibernateUtils.shutdown();
+    }
+
     public List<PointDTO> getResultListOfPoints() {
-        // TODO: need to add calling PointRepository method;
-        return listOfPointDTOS;
+        return pointDataAccessObject.getList()
+                .orElseGet(ArrayList::new)
+                .stream()
+                .map(point -> new PointDTO(
+                        point.getX(),
+                        point.getY(),
+                        point.getR(),
+                        point.getResult()
+                )).collect(Collectors.toList());
     }
 
     public void addPoint() {
@@ -38,20 +52,17 @@ public class PointBean implements Serializable {
     }
 
     public void updatePoints() {
-        System.out.println("update Points");
         Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-
         if (!map.isEmpty()) {
             String rStr = map.get("pointForm:rValue");
             double r = Double.parseDouble(rStr);
 
-            for (PointDTO pointDTO : listOfPointDTOS) {
-                pointDTO.setR(r);
-                pointDTO.setResult(pointDTO.checkArea(pointDTO.getX(), pointDTO.getY(), pointDTO.getR()));
-            }
+            pointDataAccessObject.getList().ifPresent(points -> points.forEach(point -> {
+                point.setR(r);
+                point.setResult(new PointDTO(point.getX(), point.getY(), point.getR()).checkArea(point.getX(), point.getY(), r));
+                pointDataAccessObject.updatePoint(point);
+            }));
         }
-
     }
-
 
 }
