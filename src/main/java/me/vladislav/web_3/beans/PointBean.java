@@ -45,23 +45,40 @@ public class PointBean implements Serializable {
     }
 
     public void addPoint() {
-        PointDTO resultPointDTO = new PointDTO(currentPointDTO.getX(), currentPointDTO.getY(), currentPointDTO.getR());
-        Point point = new Point(resultPointDTO.getX(), resultPointDTO.getY(), resultPointDTO.getR(), resultPointDTO.isResult());
-        pointDataAccessObject.save(point);
-        currentPointDTO = new PointDTO();
+        try {
+
+            PointDTO resultPointDTO = new PointDTO(currentPointDTO.getX(), currentPointDTO.getY(), currentPointDTO.getR());
+            Point point = new Point(resultPointDTO.getX(), resultPointDTO.getY(), resultPointDTO.getR(), resultPointDTO.isResult());
+            pointDataAccessObject.save(point);
+            currentPointDTO = new PointDTO();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void updatePoints() {
-        Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        if (!map.isEmpty()) {
-            String rStr = map.get("pointForm:rValue");
-            double r = Double.parseDouble(rStr);
+        try {
+            Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+            if (!map.isEmpty()) {
+                String rStr = map.get("pointForm:rValue");
+                double r = Double.parseDouble(rStr);
 
-            pointDataAccessObject.getList().ifPresent(points -> points.forEach(point -> {
-                point.setR(r);
-                point.setResult(new PointDTO(point.getX(), point.getY(), point.getR()).checkArea(point.getX(), point.getY(), r));
-                pointDataAccessObject.updatePoint(point);
-            }));
+                pointDataAccessObject.getList().ifPresent(points -> points.forEach(point -> {
+                    point.setR(r);
+                    point.setResult(new PointDTO(point.getX(), point.getY(), point.getR()).checkArea(point.getX(), point.getY(), r));
+                    pointDataAccessObject.update(point);
+                }));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePoints() {
+        try {
+            pointDataAccessObject.deleteAll();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

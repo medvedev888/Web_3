@@ -136,6 +136,10 @@ function deleteFigures() {
     figuresCtx.beginPath();
     figuresCtx.clearRect(0, 0, canvasGraphGridWidth, canvasGraphGridHeight);
     figuresCtx.closePath();
+    pointsCtx.beginPath();
+    pointsCtx.clearRect(0, 0, canvasGraphGridWidth, canvasGraphGridHeight);
+    pointsCtx.closePath();
+
 }
 
 // to redraw points

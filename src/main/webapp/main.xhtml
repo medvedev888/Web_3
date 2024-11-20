@@ -50,17 +50,28 @@
 
                 <h:inputText styleClass="input r-value" id="rValue" name="r" value="#{pointBean.currentPointDTO.r}" onchange="updatePointsFromSlider(); handleSliderChange();" maxlength="7" />
 
-                <!-- Кнопка Отправки -->
-                <p:commandButton
-                        styleClass="button submit_button"
-                        value="Submit"
-                        action="#{pointBean.addPoint()}"
-                        process="@form"
-                        update="pointsTable"
-                        onstart="return validateParameters();"
-                        oncomplete="if (!args.validationFailed) { redrawPoints(); }" />
+                <div style="display: flex; flex-direction: column;">
+                    <!-- Кнопка Отправки -->
+                    <p:commandButton
+                            styleClass="button submit_button"
+                            value="Submit"
+                            action="#{pointBean.addPoint()}"
+                            process="@form"
+                            update="pointsTable"
+                            onstart="return validateParameters();"
+                            oncomplete="if (!args.validationFailed) { redrawPoints(); }" />
 
+                    <!-- Кнопка Очистки -->
+                    <p:commandButton
+                            styleClass="button clear_button"
+                            value="Delete Points"
+                            action="#{pointBean.deletePoints()}"
+                            update="pointsTable"
+                            oncomplete="deleteFigures();"
+                            />
+                </div>
             </h:form>
+
         </div>
 
     </div>

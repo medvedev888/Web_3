@@ -10,7 +10,18 @@ import java.util.Optional;
 public class PointDataAccessObject implements DataAccessObject<Point> {
 
     @Override
-    public void updatePoint(Point point) {
+    public void deleteAll() {
+        try (Session session = HibernateUtils.getSession()) {
+            session.beginTransaction();
+            session.createQuery("DELETE FROM Point").executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(Point point) {
         try (Session session = HibernateUtils.getSession()) {
             session.beginTransaction();
             session.merge(point);

@@ -79,7 +79,9 @@ button {
     left: 80%;
 }
 
-.submit_button {
+.submit_button,
+.clear_button {
+    margin-top: 5px;
     position: relative;
     color: #002636;
     font-size: 14px;
