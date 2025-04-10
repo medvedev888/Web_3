@@ -1,0 +1,96 @@
+<project name="web_3" basedir="." default="compile">
+    <property file="build.properties"/>
+
+    <!-- Путь для классов и библиотек -->
+    <path id="classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${classes.dir}"/>
+    </path>
+
+    <!-- Цель для создания директорий -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <!-- Цель для компиляции -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" encoding="UTF-8" source="${javac.source}" target="${javac.target}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <!-- Цель для сборки JAR-архива -->
+    <target name="build" depends="compile">
+        <jar destfile="${jar.dir}/${jar.name}" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Version" value="${version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Цель для тестов -->
+    <target name="test" depends="build">
+        <junit printsummary="on" haltonfailure="true" haltonerror="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+            <batchtest fork="yes" todir="test-classes">
+                <fileset dir="${test.dir}" includes="**/*Test.java"/>
+            </batchtest>
+        </junit>
+    </target>
+
+    <!-- Цель для генерации документации Javadoc -->
+<!--    <target name="doc" depends="build">-->
+<!--        <javadoc destdir="docs" sourcepath="${src.dir}">-->
+<!--            <packages>-->
+<!--                <package name="me.vladislav.web_3"/>-->
+<!--            </packages>-->
+<!--        </javadoc>-->
+<!--    </target>-->
+
+    <!-- Валидация XML (не реализована в вашем примере) -->
+    <target name="xml" depends="build">
+        <echo message="XML validation is skipped, add XMLTask or similar plugin."/>
+    </target>
+
+    <!-- Альтернативная версия -->
+<!--    <target name="alt" depends="build">-->
+<!--        <replace dir="${classes.dir}">-->
+<!--            <replaceregexp pattern="OldClassName" replace="NewClassName"/>-->
+<!--        </replace>-->
+<!--        <jar destfile="${jar.dir}/MemoriaWebAppAlt.jar" basedir="${classes.dir}">-->
+<!--            <manifest>-->
+<!--                <attribute name="Main-Class" value="${main.class}"/>-->
+<!--            </manifest>-->
+<!--        </jar>-->
+<!--    </target>-->
+
+    <!-- Воспроизведение музыки (можно заменить на практическое задание) -->
+    <target name="music" depends="build">
+        <echo message="Playing music..."/>
+        <!-- Здесь можно добавить скрипт или команду для воспроизведения музыки -->
+    </target>
+
+    <!-- Сборка предыдущих версий из SVN -->
+<!--    <target name="team" depends="build">-->
+<!--        <svn url="svn://path_to_your_repo" revision="HEAD-3" checkout="true" dest="team_version"/>-->
+<!--        <echo message="Team build: Retrieving and building previous versions from SVN..."/>-->
+<!--        <jar destfile="${jar.dir}/TeamBuild.zip" basedir="team_version"/>-->
+<!--    </target>-->
+
+    <!-- Очистка -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Основная цель -->
+<!--    <target name="all" depends="build, test, doc, xml, music"/>-->
+    <target name="all" depends="build, test, xml, music"/>
+</project>
