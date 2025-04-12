@@ -71,9 +71,16 @@
         </xmlvalidate>
     </target>
 
+    <!-- Воспроизведение музыки -->
+    <target name="music" depends="build">
+        <echo message="Playing music..."/>
+        <exec executable="C:/Program Files (x86)/Windows Media Player/wmplayer.exe">
+            <arg line="${basedir}\sound.mp3"/>
+        </exec>
+    </target>
+
     <!-- Альтернативная версия -->
     <target name="alt" depends="build">
-        <!-- Заменяем строку в исходном файле -->
         <replaceregexp file="${src.dir}/me/vladislav/web_3/Main.java"
                        match="Hello World"
                        replace="Hello :)"
@@ -81,13 +88,6 @@
 
         <echo message="Change string in Main.java"/>
         <ant target="build"/>
-    </target>
-
-
-    <!-- Воспроизведение музыки (можно заменить на практическое задание) -->
-    <target name="music" depends="build">
-        <echo message="Playing music..."/>
-        <!-- Здесь можно добавить скрипт или команду для воспроизведения музыки -->
     </target>
 
     <!-- Сборка предыдущих версий из SVN -->
