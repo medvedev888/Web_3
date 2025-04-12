@@ -9,6 +9,18 @@
         <pathelement location="${classes.dir}"/>
     </path>
 
+    <!-- Путь для классов и библиотек для тестов -->
+    <path id="classpath.test">
+        <fileset dir="lib">
+            <include name="junit-jupiter-api-*.jar"/>
+            <include name="junit-jupiter-engine-*.jar"/>
+            <include name="junit-platform-launcher-*.jar"/>
+            <include name="junit-platform-console-standalone-1.13.0-M2.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}/test-classes"/>
+    </path>
+
+
     <!-- Цель для создания директорий -->
     <target name="init">
         <mkdir dir="${build.dir}"/>
@@ -35,16 +47,12 @@
     </target>
 
     <!-- Цель для тестов -->
-    <target name="test" depends="build">
-        <junit printsummary="on" haltonfailure="true" haltonerror="true">
-            <classpath>
-                <path refid="classpath"/>
-                <pathelement location="${classes.dir}"/>
-            </classpath>
-            <batchtest fork="yes" todir="test-classes">
-                <fileset dir="${test.dir}" includes="**/*Test.java"/>
-            </batchtest>
-        </junit>
+    <target name="test" depends="compile">
+        <echo message="Running JUnit tests..." />
+        <java classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
+            <classpath refid="classpath.test"/>
+            <arg value="--scan-classpath"/>
+        </java>
     </target>
 
     <!-- Цель для генерации документации Javadoc -->
@@ -90,18 +98,57 @@
         <ant target="build"/>
     </target>
 
-    <!-- Сборка предыдущих версий из SVN -->
-    <!--    <target name="team" depends="build">-->
-    <!--        <svn url="svn://path_to_your_repo" revision="HEAD-3" checkout="true" dest="team_version"/>-->
-    <!--        <echo message="Team build: Retrieving and building previous versions from SVN..."/>-->
-    <!--        <jar destfile="${jar.dir}/TeamBuild.zip" basedir="team_version"/>-->
-    <!--    </target>-->
+    <!-- Цель для получения предыдущих 3 ревизий из Git и сборки их в один архив -->
+    <target name="team" depends="build">
+        <mkdir dir="${build.dir}/team_build"/>
+
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="HEAD"/>
+        </exec>
+
+        <ant target="build"/>
+        <move file="${jar.dir}/${jar.name}" tofile="${build.dir}/team_build/TeamBuild_HEAD.jar"/>
+
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="HEAD~1"/>
+        </exec>
+
+        <ant target="build"/>
+        <move file="${jar.dir}/${jar.name}" tofile="${build.dir}/team_build/TeamBuild_HEAD_1.jar"/>
+
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="HEAD~2"/>
+        </exec>
+
+        <ant target="build"/>
+        <move file="${jar.dir}/${jar.name}" tofile="${build.dir}/team_build/TeamBuild_HEAD_2.jar"/>
+
+        <zip destfile="${jar.dir}/LastVersion.zip" basedir="${build.dir}/team_build">
+            <include name="**/*.jar"/>
+        </zip>
+
+        <!-- Удаляем временную директорию после упаковки -->
+        <delete dir="${build.dir}/team_build"/>
+    </target>
+
+
+    <target name="env" depends="build">
+        <!-- Запуск приложения с использованием параметров из build.properties -->
+        <exec executable="java">
+            <arg value="${jvm.args}"/>
+            <arg value="-cp"/>
+            <arg value="${classes.dir}:${jar.dir}/${jar.name}"/>
+            <arg value="${main.class}"/>
+        </exec>
+    </target>
+
 
     <!-- Очистка -->
     <target name="clean">
         <delete dir="${build.dir}"/>
     </target>
 
-    <!-- Основная цель -->
-    <target name="all" depends="build, test, xml, music"/>
 </project>
