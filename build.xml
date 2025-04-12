@@ -18,7 +18,8 @@
 
     <!-- Цель для компиляции -->
     <target name="compile" depends="init">
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" encoding="UTF-8" source="${javac.source}" target="${javac.target}">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" encoding="UTF-8" source="${javac.source}"
+               target="${javac.target}">
             <classpath refid="classpath"/>
         </javac>
     </target>
@@ -47,30 +48,41 @@
     </target>
 
     <!-- Цель для генерации документации Javadoc -->
-<!--    <target name="doc" depends="build">-->
-<!--        <javadoc destdir="docs" sourcepath="${src.dir}">-->
-<!--            <packages>-->
-<!--                <package name="me.vladislav.web_3"/>-->
-<!--            </packages>-->
-<!--        </javadoc>-->
-<!--    </target>-->
+    <target name="doc" depends="build">
+        <javadoc destdir="docs"
+                 sourcepath="${src.dir}"
+                 classpathref="classpath"
+                 author="true"
+                 version="true"
+                 use="true"
+                 windowtitle="MemoriaWebApp Javadoc"
+                 doctitle="Memoria Web App API Documentation">
+            <packageset dir="${src.dir}" includes="me/vladislav/web_3/**"/>
+            <arg value="-Xdoclint:none"/>
+        </javadoc>
+    </target>
 
-    <!-- Валидация XML (не реализована в вашем примере) -->
-    <target name="xml" depends="build">
-        <echo message="XML validation is skipped, add XMLTask or similar plugin."/>
+    <!-- Валидация XML -->
+    <target name="xml">
+        <xmlvalidate lenient="true">
+            <fileset dir="./" includes="**/*.xml">
+                <exclude name=".idea/**"/>
+            </fileset>
+        </xmlvalidate>
     </target>
 
     <!-- Альтернативная версия -->
-<!--    <target name="alt" depends="build">-->
-<!--        <replace dir="${classes.dir}">-->
-<!--            <replaceregexp pattern="OldClassName" replace="NewClassName"/>-->
-<!--        </replace>-->
-<!--        <jar destfile="${jar.dir}/MemoriaWebAppAlt.jar" basedir="${classes.dir}">-->
-<!--            <manifest>-->
-<!--                <attribute name="Main-Class" value="${main.class}"/>-->
-<!--            </manifest>-->
-<!--        </jar>-->
-<!--    </target>-->
+    <target name="alt" depends="build">
+        <!-- Заменяем строку в исходном файле -->
+        <replaceregexp file="${src.dir}/me/vladislav/web_3/Main.java"
+                       match="Hello World"
+                       replace="Hello :)"
+                       byline="true"/>
+
+        <echo message="Change string in Main.java"/>
+        <ant target="build"/>
+    </target>
+
 
     <!-- Воспроизведение музыки (можно заменить на практическое задание) -->
     <target name="music" depends="build">
@@ -79,11 +91,11 @@
     </target>
 
     <!-- Сборка предыдущих версий из SVN -->
-<!--    <target name="team" depends="build">-->
-<!--        <svn url="svn://path_to_your_repo" revision="HEAD-3" checkout="true" dest="team_version"/>-->
-<!--        <echo message="Team build: Retrieving and building previous versions from SVN..."/>-->
-<!--        <jar destfile="${jar.dir}/TeamBuild.zip" basedir="team_version"/>-->
-<!--    </target>-->
+    <!--    <target name="team" depends="build">-->
+    <!--        <svn url="svn://path_to_your_repo" revision="HEAD-3" checkout="true" dest="team_version"/>-->
+    <!--        <echo message="Team build: Retrieving and building previous versions from SVN..."/>-->
+    <!--        <jar destfile="${jar.dir}/TeamBuild.zip" basedir="team_version"/>-->
+    <!--    </target>-->
 
     <!-- Очистка -->
     <target name="clean">
@@ -91,6 +103,5 @@
     </target>
 
     <!-- Основная цель -->
-<!--    <target name="all" depends="build, test, doc, xml, music"/>-->
     <target name="all" depends="build, test, xml, music"/>
 </project>

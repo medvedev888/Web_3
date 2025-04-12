@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.vladislav.web_3"},{"l":"me.vladislav.web_3.beans"},{"l":"me.vladislav.web_3.dao"},{"l":"me.vladislav.web_3.dto"},{"l":"me.vladislav.web_3.models"},{"l":"me.vladislav.web_3.utils"}];updateSearchResults();
