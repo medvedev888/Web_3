@@ -165,7 +165,7 @@
         </plugins>
     </build>
 
-<!--    profile для альтернативной версии (alt) -->
+    <!--    profile для альтернативной версии (alt) -->
     <profiles>
         <profile>
             <id>alternative</id>
@@ -197,6 +197,132 @@
                 </plugins>
             </build>
         </profile>
+
+        <!-- profile для получения zip-архива 3 последних ревизий (team) -->
+        <profile>
+            <id>team</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <!-- Получаем первую ревизию (HEAD) -->
+                            <execution>
+                                <id>checkout-revision-head</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>git</executable>
+                                    <arguments>
+                                        <argument>checkout</argument>
+                                        <argument>HEAD</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Сборка HEAD ревизии -->
+                            <execution>
+                                <id>build-revision-head</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>mvn</executable>
+                                    <arguments>
+                                        <argument>clean</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Получаем вторую ревизию (HEAD~1) -->
+                            <execution>
+                                <id>checkout-revision-1</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>git</executable>
+                                    <arguments>
+                                        <argument>checkout</argument>
+                                        <argument>HEAD~1</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Сборка HEAD~1 ревизии -->
+                            <execution>
+                                <id>build-revision-1</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>mvn</executable>
+                                    <arguments>
+                                        <argument>clean</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Получаем третью ревизию (HEAD~2) -->
+                            <execution>
+                                <id>checkout-revision-2</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>git</executable>
+                                    <arguments>
+                                        <argument>checkout</argument>
+                                        <argument>HEAD~2</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Сборка HEAD~2 ревизии -->
+                            <execution>
+                                <id>build-revision-2</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>mvn</executable>
+                                    <arguments>
+                                        <argument>clean</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <!-- Архивируем собранные JAR-файлы -->
+                            <execution>
+                                <id>archive-revisions</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>zip</executable>
+                                    <arguments>
+                                        <argument>-r</argument>
+                                        <argument>${project.build.directory}/LastVersion.zip</argument>
+                                        <argument>${project.build.directory}/*.jar</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
+
 
 </project>
