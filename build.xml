@@ -63,8 +63,8 @@
                  author="true"
                  version="true"
                  use="true"
-                 windowtitle="MemoriaWebApp Javadoc"
-                 doctitle="Memoria Web App API Documentation">
+                 windowtitle="Web_3 Javadoc"
+                 doctitle="Web_3 App API Documentation">
             <packageset dir="${src.dir}" includes="me/vladislav/web_3/**"/>
             <arg value="-Xdoclint:none"/>
         </javadoc>
