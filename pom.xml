@@ -160,8 +160,6 @@
                 </executions>
             </plugin>
 
-            <!-- Альтернативное окружение -->
-
         </plugins>
     </build>
 

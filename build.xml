@@ -102,39 +102,60 @@
     <target name="team" depends="build">
         <mkdir dir="${build.dir}/team_build"/>
 
-        <exec executable="git">
-            <arg value="checkout"/>
+        <!-- Сохраняем текущую ветку/коммит -->
+        <exec executable="git" outputproperty="current.branch">
+            <arg value="rev-parse"/>
+            <arg value="--abbrev-ref"/>
             <arg value="HEAD"/>
         </exec>
 
+        <!-- Сохраняем текущий коммит -->
+        <exec executable="git" outputproperty="current.commit">
+            <arg value="rev-parse"/>
+            <arg value="HEAD"/>
+        </exec>
+
+        <!-- HEAD -->
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="${current.commit}"/>
+        </exec>
         <ant target="build"/>
         <move file="${jar.dir}/${jar.name}" tofile="${build.dir}/team_build/TeamBuild_HEAD.jar"/>
 
+        <!-- HEAD~1 -->
         <exec executable="git">
             <arg value="checkout"/>
             <arg value="HEAD~1"/>
         </exec>
-
         <ant target="build"/>
         <move file="${jar.dir}/${jar.name}" tofile="${build.dir}/team_build/TeamBuild_HEAD_1.jar"/>
 
+        <!-- HEAD~2 -->
         <exec executable="git">
             <arg value="checkout"/>
             <arg value="HEAD~2"/>
         </exec>
-
         <ant target="build"/>
         <move file="${jar.dir}/${jar.name}" tofile="${build.dir}/team_build/TeamBuild_HEAD_2.jar"/>
 
+        <!-- Возвращаемся обратно на исходную ветку -->
+        <exec executable="git">
+            <arg value="checkout"/>
+            <arg value="${current.branch}"/>
+        </exec>
+
+        <!-- Архивация -->
         <zip destfile="${jar.dir}/LastVersion.zip" basedir="${build.dir}/team_build">
             <include name="**/*.jar"/>
         </zip>
 
-        <!-- Удаляем временную директорию после упаковки -->
+        <!-- Удаляем временную папку -->
         <delete dir="${build.dir}/team_build"/>
     </target>
 
 
+    <!-- Цель осуществляет сборку и запуск программы в альтернативных окружениях-->
     <target name="env" depends="build">
         <!-- Запуск приложения с использованием параметров из build.properties -->
         <exec executable="java">
