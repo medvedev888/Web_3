@@ -100,6 +100,7 @@
             <!-- test - из коробки (mvn test) -->
 
             <!-- Плагин для генерации Javadoc -->
+            <!-- mvn javadoc:javadoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -124,6 +125,7 @@
                 <version>3.1.0</version>
                 <executions>
                     <!-- Валидация XML -->
+                    <!-- mvn validate-->
                     <execution>
                         <id>validate-xml</id>
                         <phase>validate</phase>
@@ -157,6 +159,37 @@
                             </target>
                         </configuration>
                     </execution>
+
+                    <!-- Получение предыдущих 3 ревизий из Git и сборки их в один архив -->
+                    <execution>
+                        <id>team-build</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <!-- Запускаем Ant target="team" из build.xml -->
+                                <ant antfile="${basedir}/build.xml" target="team"/>
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <!-- Цель осуществляет сборку и запуск программы в альтернативных окружениях-->
+                    <execution>
+                        <id>run-in-env</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <!-- Запускаем Ant target="env" из build.xml -->
+                                <ant antfile="${basedir}/build.xml" target="env"/>
+                            </target>
+                        </configuration>
+
+                    </execution>
                 </executions>
             </plugin>
 
@@ -164,6 +197,7 @@
     </build>
 
     <!-- profile для альтернативной версии (alt) -->
+    <!-- mvn generate-sources -Palternative -->
     <profiles>
         <profile>
             <id>alternative</id>
