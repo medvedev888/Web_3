@@ -5,7 +5,6 @@ function handleSliderChange() {
     deleteFigures();
     drawingFigure(r);
     redrawPoints();
-
 }
 
 // подготовка параметра r к отправке на бэкэнд
@@ -18,3 +17,10 @@ function updatePointsFromSlider() {
     }
 
 }
+
+function sendTimeToServer() {
+    const now = new Date().toISOString();
+    sendClientTimeToServer([{name: 'pointBean.clientTime', value: now}]);
+}
+
+

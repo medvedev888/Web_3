@@ -32,7 +32,6 @@
 
         <div>
             <h:form id="pointForm" styleClass="pointDTO-form">
-                <!--  TODO: need to add validation of fields -->
                 <!-- Слайдер для X -->
                 <h:outputLabel value="Select X:" for="xSlider"/>
                 <p:slider id="xSlider" for="xValue" minValue="-4" maxValue="4" step="0.1" value="#{pointBean.currentPointDTO.x}"/>
@@ -101,6 +100,13 @@
     <!-- Для обновления массива точек при смене параметра r -->
     <p:remoteCommand name="updatePointsFromSliderCommand" actionListener="#{pointBean.updatePoints()}"
                      process="@this" update="pointsTable" oncomplete="redrawPoints();"/>
+
+    <!-- Для отправки времени нажатия на график -->
+    <p:remoteCommand
+            name="sendClientTimeToServer"
+            process="@this"
+            action="#{pointBean.handleClientTime}"
+            update="@none" />
 
     <h:outputScript name="js/validation.js" />
     <h:outputScript name="js/graph.js"/>

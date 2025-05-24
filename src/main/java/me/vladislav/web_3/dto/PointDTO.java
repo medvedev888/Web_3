@@ -26,7 +26,6 @@ public class PointDTO implements Serializable {
     public boolean checkArea(double x, double y, double r) {
         boolean result = false;
 
-        //    TODO: need to change this block
         if (x >= 0 && y >= 0 && ((x * x + y * y) <= (r * r))) {
             result = true;
         } else if (x >= 0 && y <= 0 && x <= r && y >= (-1) * (r / 2)) {

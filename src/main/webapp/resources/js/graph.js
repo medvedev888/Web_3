@@ -86,6 +86,7 @@ function drawingMainAxes() {
 
 //drawing point
 function drawPoint(xCoord, yCoord, result) {
+    console.log("Draw points:" + xCoord + yCoord + result)
     if (result === "true") {
         pointsCtx.fillStyle = "#01ff7f";
     } else {
@@ -144,13 +145,16 @@ function deleteFigures() {
 
 // to redraw points
 function redrawPoints() {
+    console.log("redraw points")
     const tableRows = document.querySelectorAll('.table tbody tr');
     tableRows.forEach(x => {
+        console.log(x)
         if (x.childNodes.length > 1) {
             const children = x.children;
             drawPoint(children[0].innerHTML, children[1].innerHTML, children[3].innerHTML);
         }
     });
+    console.log("end of redrawing points")
 }
 
 window.addEventListener("load", () => {
@@ -167,13 +171,14 @@ document.querySelector('#canvas_graph_points').onmousemove = function (event) {
 }
 
 document.querySelector('#canvas_graph_points').onclick = function () {
-    // TODO: change this block
     const xInput = document.querySelector('.x-value');
     const yInput = document.querySelector('.y-input');
     const submitButton = document.querySelector('.submit_button');
 
     xInput.value = xCoordinate;
     yInput.value = yCoordinate;
+
+    sendTimeToServer();
 
     submitButton.click();
 }
