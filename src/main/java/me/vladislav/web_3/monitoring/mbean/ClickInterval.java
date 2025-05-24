@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 // MBean, определяющий средний интервал между кликами пользователя по координатной плоскости.
-
 @SessionScoped
 @Named
 public class ClickInterval implements ClickIntervalMBean, Serializable {

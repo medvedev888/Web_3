@@ -115,6 +115,10 @@ public class PointBean implements Serializable {
             Point point = new Point(resultPointDTO.getX(), resultPointDTO.getY(), resultPointDTO.getR(), resultPointDTO.isResult());
             pointDataAccessObject.save(point);
             currentPointDTO = new PointDTO();
+
+            if (!resultPointDTO.isResult()) {
+                pointStatistics.notifyOutOfBounds(resultPointDTO.getX(), resultPointDTO.getY(), resultPointDTO.getR());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

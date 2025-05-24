@@ -3,12 +3,14 @@ package me.vladislav.web_3.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class PointDTO implements Serializable {
     private double x;
     private double y;
